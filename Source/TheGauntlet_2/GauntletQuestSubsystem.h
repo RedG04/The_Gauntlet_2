@@ -13,7 +13,7 @@ class UGauntletQuestSubsystem : public UGameInstanceSubsystem
 
 public:
 	UPROPERTY(EditDefaultsOnly)
-	UDataTable* QuestDataTable;
+	UDataTable* DT_Quest;
 
 	void CompleteQuest();
 };
