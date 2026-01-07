@@ -1,5 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "GauntletQuestSubsystem.h"
+#include "Engine/Engine.h"
 
+void UGauntletQuestSubsystem::CompleteQuest()
+{
+	UE_LOG(LogTemp, Warning, TEXT("QUEST COMPLETATA"));
+	
+	// - VFX
+	// - Sound
+	// - Update DataTable
+}

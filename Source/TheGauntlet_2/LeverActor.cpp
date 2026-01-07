@@ -1,22 +1,20 @@
 #include "LeverActor.h"
-#include "Components/StaticMeshComponent.h"
-#include "Materials/MaterialInstanceDynamic.h"
+#include "Interactable.h"
 
-ALeverActor::ALeverActor()
+void ALeverActor::Interact_Implementation(AActor* Interactor)
 {
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	RootComponent = Mesh;
-}
+	if (bHasBeenInteracted)
+		return;
 
+	Super::Interact_Implementation(Interactor);
 
-void ALeverActor::BeginPlay()
-{
-	Super::BeginPlay();
+	SetColor(FLinearColor::Green);
 
-	DynamicMaterial = Mesh->CreateDynamicMaterialInstance(0);
-
-	if (DynamicMaterial)
+	if (!TargetActor)
+		return;
+	
+	if (TargetActor->Implements<UInteractable>())
 	{
-		DynamicMaterial->SetVectorParameterValue("Color", FLinearColor::Red);
+		IInteractable::Execute_Interact(TargetActor, this);
 	}
 }

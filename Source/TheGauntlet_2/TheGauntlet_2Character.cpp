@@ -12,6 +12,8 @@
 #include "Interactable.h"
 #include "GameFramework/PlayerController.h"
 
+DEFINE_LOG_CATEGORY(LogTemplateCharacter);
+
 ATheGauntlet_2Character::ATheGauntlet_2Character()
 {
 	// Set size for collision capsule
@@ -87,6 +89,19 @@ void ATheGauntlet_2Character::Interact()
 		}
 	}
 }
+
+void ATheGauntlet_2Character::SetHasArtifact(bool bNewValue)
+{
+	bHasArtifact = bNewValue;
+
+	UE_LOG(LogTemplateCharacter, Log, TEXT("HasArtifact: %s"), bHasArtifact ? TEXT("TRUE") : TEXT("FALSE"));
+}
+
+bool ATheGauntlet_2Character::HasArtifact() const
+{
+	return bHasArtifact;
+}
+
 
 void ATheGauntlet_2Character::MoveInput(const FInputActionValue& Value)
 {

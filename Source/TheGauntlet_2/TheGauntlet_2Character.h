@@ -49,8 +49,20 @@ protected:
 	UPROPERTY(EditAnywhere, Category ="Input")
 	class UInputAction* MouseLookAction;
 	
+	/**Artifact*/
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Gameplay")
+	bool bHasArtifact = false;
+	
 public:
 	ATheGauntlet_2Character();
+	
+	// Set quando raccolgo l’artefatto
+	UFUNCTION(BlueprintCallable, Category="Gameplay")
+	void SetHasArtifact(bool bNewValue);
+
+	// Check (usato da Exit)
+	UFUNCTION(BlueprintCallable, Category="Gameplay")
+	bool HasArtifact() const;
 
 protected:
 	
