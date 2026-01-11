@@ -46,4 +46,6 @@ protected:
 
 	void SetTurretActive(bool bNewState);
 	void PrintDebug();
+	void ReactivateTurret();
+
 };

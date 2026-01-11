@@ -13,16 +13,25 @@ void ATurretActor::BeginPlay()
 {
     Super::BeginPlay();
 
-    // Create the pool one time
+    if (!ProjectileClass)
+    {
+        UE_LOG(LogTemp, Error, TEXT("ProjectileClass NON impostata su %s"), *GetName());
+        return;
+    }
+
     for (int32 i = 0; i < PoolSize; i++)
     {
         AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass);
-        Projectile->DeactivateProjectile();
-        ProjectilePool.Add(Projectile);
+        if (Projectile)
+        {
+            Projectile->DeactivateProjectile();
+            ProjectilePool.Add(Projectile);
+        }
     }
 
     SetTurretActive(true);
 }
+
 
 void ATurretActor::Fire()
 {
@@ -55,12 +64,12 @@ void ATurretActor::SetTurretActive(bool bNewState)
 
     if (bIsActive)
     {
-        SetColor(FLinearColor(1.f, 0.5f, 0.f)); // 🟠
+        SetColor(FLinearColor(1.f, 0.5f, 0.f));
         GetWorldTimerManager().SetTimer(FireTimer, this, &ATurretActor::Fire, FireRate, true);
     }
     else
     {
-        SetColor(FLinearColor::Blue); // 🔵
+        SetColor(FLinearColor::Blue); // Blue
         GetWorldTimerManager().ClearTimer(FireTimer);
     }
 }
@@ -71,14 +80,18 @@ void ATurretActor::Interact_Implementation(AActor* Interactor)
 
     GetWorldTimerManager().SetTimer(
         DisableTimer,
-        [this]()
-        {
-            SetTurretActive(true);
-        },
+        this,
+        &ATurretActor::ReactivateTurret,
         DisableTime,
         false
     );
 }
+
+void ATurretActor::ReactivateTurret()
+{
+    SetTurretActive(true);
+}
+
 
 void ATurretActor::PrintDebug()
 {
