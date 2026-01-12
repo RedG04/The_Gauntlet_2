@@ -21,9 +21,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Orbit")
 	float RotationSpeed = 45.f;
+	
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* Pivot;
 
 	UPROPERTY(EditAnywhere, Category="Orbit")
-	TArray<USceneComponent*> Platforms;
+	TArray<UStaticMeshComponent*> Platforms;
 
 	bool bIsActive = false;
 };

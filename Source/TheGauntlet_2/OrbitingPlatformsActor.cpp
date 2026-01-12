@@ -6,6 +6,9 @@ AOrbitingPlatformsActor::AOrbitingPlatformsActor()
 
 	USceneComponent* Root = CreateDefaultSubobject<USceneComponent>("Root");
 	SetRootComponent(Root);
+
+	Pivot = CreateDefaultSubobject<USceneComponent>("Pivot");
+	Pivot->SetupAttachment(Root);
 }
 
 void AOrbitingPlatformsActor::BeginPlay()
@@ -25,7 +28,8 @@ void AOrbitingPlatformsActor::Tick(float DeltaTime)
 	if (!bIsActive)
 		return;
 
-	AddActorLocalRotation(
+	Pivot->AddLocalRotation(
 		FRotator(0.f, RotationSpeed * DeltaTime, 0.f)
 	);
 }
+
