@@ -33,8 +33,11 @@ void AProjectile::ActivateProjectile(const FVector& StartLocation, const FVector
 	
 	Movement->StopMovementImmediately();
 
+	
 	Movement->Velocity = Direction.GetSafeNormal() * Movement->InitialSpeed;
-
+	
+	if (GEngine) GEngine -> AddOnScreenDebugMessage(0, 10.f, FColor::Green, Movement->Velocity.ToString());
+	
 	bIsActive = true;
 }
 
