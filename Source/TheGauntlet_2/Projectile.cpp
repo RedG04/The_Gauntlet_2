@@ -16,14 +16,21 @@ AProjectile::AProjectile()
 	Movement->MaxSpeed = 1200.f;
 }
 
-void AProjectile::BeginPlay()
+/*void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
 	Mesh->OnComponentHit.AddDynamic(this, &AProjectile::OnProjectileHit);
 	
 	DeactivateProjectile();
+}*/
+
+void AProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+	Mesh->OnComponentHit.AddDynamic(this, &AProjectile::OnProjectileHit);
 }
+
 
 void AProjectile::ActivateProjectile(const FVector& StartLocation, const FVector& Direction)
 {
@@ -41,16 +48,25 @@ void AProjectile::ActivateProjectile(const FVector& StartLocation, const FVector
 	bIsActive = true;
 }
 
+/*void AProjectile::DeactivateProjectile()
+{
+	SetActorHiddenInGame(true); 
+	SetActorEnableCollision(false); 
+	
+	Movement->StopMovementImmediately();
+	bIsActive = false;
+}*/
 
 void AProjectile::DeactivateProjectile()
 {
 	SetActorHiddenInGame(true);
 	SetActorEnableCollision(false);
-	
-	Movement->StopMovementImmediately();
+
+	Movement->Deactivate();
 
 	bIsActive = false;
 }
+
 
 
 void AProjectile::OnProjectileHit(
@@ -65,3 +81,4 @@ void AProjectile::OnProjectileHit(
 
 	DeactivateProjectile();
 }
+
